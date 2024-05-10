@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto Estacionamento</title>
+    <style>
+        body {
+            background-color: #afadad; /* Cinza claro */
+            font-family: Arial, sans-serif;
+        }
+
+        h1, h2 {
+            color: #333; /* Cor do texto */
+        }
+
+        button {
+            padding: 10px 20px;
+            border: 2px solid black;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button.verde {
+            background-color: #4CAF50; /* Verde */
+            color: white;
+        }
+
+        button.vermelho {
+            background-color: #f44336; /* Vermelho */
+            color: white;
+        }
+
+        .vagas {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .vagas .circulo {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .circulo.verde {
+            background-color: #4CAF50; /* Verde */
+            border: 2px solid black;
+        }
+
+        .circulo.vermelho {
+            background-color: #f44336; /* Vermelho */
+            border: 2px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Projeto Estacionamento</h1>
+    
+    <h2>Planta do estacionamento:</h2>
+    <!-- Adicione o caminho da imagem local no atributo src -->
+    <img src=".//SENAI_ESTACIONAMENTO.png" width="361" height="240" alt="Planta do estacionamento">
+
+    <h2>Entrada no estacionamento:</h2>
+    <label for="placaEntrada">Placa do veículo:</label>
+    <input type="text" id="placaEntrada" name="placaEntrada">
+    <button class="verde" onclick="registrarEntrada()">Registrar</button>
+
+    <h2>Saída do estacionamento:</h2>
+    <label for="placaSaida">Placa do veículo:</label>
+    <input type="text" id="placaSaida" name="placaSaida">
+    <button class="vermelho" onclick="registrarSaida()">Registrar</button>
+
+    <h2>Vagas</h2>
+    <div class="vagas">
+        <div class="circulo verde"></div>
+        <span>LIVRES: 7</span>
+    </div>
+    <div class="vagas">
+        <div class="circulo vermelho"></div>
+        <span>OCUPADAS: 8</span>
+    </div>
+
+    <script>
+        function registrarEntrada() {
+            var placaEntrada = document.getElementById("placaEntrada").value;
+            var data = { placa: placaEntrada };
+
+            // Fazendo uma solicitação POST para o backend
+            fetch('/registrar-entrada', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Entrada registrada com sucesso');
+                    // Você pode adicionar aqui lógica adicional, como atualizar a página ou exibir uma mensagem de sucesso
+                } else {
+                    console.error('Erro ao registrar entrada');
+                    // Você pode lidar com erros aqui, como exibir uma mensagem de erro para o usuário
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao registrar entrada:', error);
+            });
+        }
+
+        function registrarSaida() {
+            // Função para registrar a saída do estacionamento
+            var placaSaida = document.getElementById("placaSaida").value;
+            // Aqui você pode adicionar a lógica para registrar a saída, como enviar a placa para o backend
+            console.log("Saída registrada para o veículo com placa:", placaSaida);
+        }
+    </script>
+</body>
+</html>
